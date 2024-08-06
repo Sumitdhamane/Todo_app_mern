@@ -1,0 +1,47 @@
+/* Custom styles for the login component */
+
+body {
+  background-color: #f8f9fa;
+  font-family: "Roboto", sans-serif; /* You can choose any other font */
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  color: #343a40;
+  font-weight: bold;
+}
+
+.form-label {
+  color: #495057;
+}
+
+.form-control {
+  border-radius: 5px;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.form-control:focus {
+  border-color: #6c757d;
+  box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+}
+
+.btn-dark {
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+.btn-dark:hover {
+  background-color: #495057;
+  border-color: #495057;
+}
+
+.btn:focus {
+  box-shadow: 0 0 0 0.2rem rgba(52, 58, 64, 0.25);
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
