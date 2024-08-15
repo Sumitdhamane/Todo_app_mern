@@ -4,7 +4,7 @@ import { getTodoListApi, createTodoApi, getToken } from "../services/api.js";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import no_Todo from "../components/css/No Task.png";
 function Home() {
   const navigate = useNavigate();
   const [list, setList] = useState([]);
@@ -72,45 +72,36 @@ function Home() {
   };
 
   return (
-    <div>
+    <div style={styles.pageContainer}>
       <ToastContainer />
-      <div className="container">
+      <div className="container" style={styles.container}>
         <div className="row justify-content-md-center mt-4">
-          {list.map((todo) => (
-            <Todo
-              todo={todo}
-              key={todo._id}
-              removeTodo={removeTodo}
-              updateTodo={updateTodo}
-            />
-          ))}
+          {list.length === 0 ? (
+            <div style={styles.emptyState}>
+              <img
+                src={no_Todo} // Replace this with a valid image URL
+                alt="No Todos"
+                style={styles.emptyImage}
+              />
+              <p style={styles.emptyText}>No Todos yet! Start by adding one.</p>
+            </div>
+          ) : (
+            list.map((todo) => (
+              <Todo
+                todo={todo}
+                key={todo._id}
+                removeTodo={removeTodo}
+                updateTodo={updateTodo}
+              />
+            ))
+          )}
         </div>
-        <div
-          style={{
-            position: "fixed",
-            right: "50px",
-            bottom: "50px",
-            zIndex: 1030,
-          }}
-        >
+        <div style={styles.fabContainer}>
           <button
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
-            style={{
-              backgroundColor: "#4CAF50",
-              color: "#fff",
-              border: "none",
-              borderRadius: "50%",
-              width: "60px",
-              height: "60px",
-              fontSize: "1.5rem",
-              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
+            style={styles.fabButton}
           >
             +
           </button>
@@ -118,9 +109,11 @@ function Home() {
 
         <div className="modal mt-5" id="exampleModal">
           <div className="modal-dialog" role="document">
-            <div className="modal-content">
+            <div className="modal-content" style={styles.modalContent}>
               <div className="modal-header">
-                <div className="modal-title">Add new Todo</div>
+                <div className="modal-title" style={styles.modalTitle}>
+                  Add new Todo
+                </div>
                 <button
                   type="button"
                   className="btn-close"
@@ -133,20 +126,18 @@ function Home() {
               <div className="modal-body">
                 <div className="form-group">
                   <textarea
-                    name=""
                     className="form-control"
                     rows={3}
                     value={todoDesc}
-                    onChange={(e) => {
-                      setTodoDesc(e.target.value);
-                    }}
+                    onChange={(e) => setTodoDesc(e.target.value)}
                     placeholder="Write Todos...."
+                    style={styles.textArea}
                   ></textarea>
                 </div>
               </div>
               <div className="modal-footer">
                 <button
-                  className="btn btn-secondary"
+                  className="btn btn-primary"
                   onClick={handleTodoSubmit}
                   data-bs-dismiss="modal"
                 >
@@ -154,9 +145,7 @@ function Home() {
                 </button>
                 <button
                   className="btn btn-secondary"
-                  onClick={() => {
-                    setTodoDesc("");
-                  }}
+                  onClick={() => setTodoDesc("")}
                   data-bs-dismiss="modal"
                 >
                   Close
@@ -169,5 +158,65 @@ function Home() {
     </div>
   );
 }
+
+const styles = {
+  pageContainer: {
+    background: "linear-gradient(to right, #ece9e6, #ffffff)",
+    minHeight: "100vh",
+    padding: "20px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "column",
+  },
+  container: {
+    maxWidth: "600px",
+    width: "100%",
+  },
+  fabContainer: {
+    position: "fixed",
+    right: "50px",
+    bottom: "50px",
+    zIndex: 1030,
+  },
+  fabButton: {
+    backgroundColor: "#4CAF50",
+    color: "#fff",
+    border: "none",
+    borderRadius: "50%",
+    width: "60px",
+    height: "60px",
+    fontSize: "1.5rem",
+    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
+    cursor: "pointer",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    transition: "transform 0.2s",
+  },
+  emptyState: {
+    textAlign: "center",
+    paddingTop: "50px",
+  },
+  emptyImage: {
+    width: "150px",
+    marginBottom: "20px",
+  },
+  emptyText: {
+    fontSize: "1.2rem",
+    color: "#666",
+  },
+  modalContent: {
+    borderRadius: "10px",
+  },
+  modalTitle: {
+    fontSize: "1.5rem",
+    fontWeight: "bold",
+  },
+  textArea: {
+    borderRadius: "5px",
+    padding: "10px",
+  },
+};
 
 export default Home;
